@@ -10,7 +10,7 @@ const int TRIG_PIN = 5;
 const int ECHO_PIN = 18;
 const int RELAY[4] = {19, 21, 22, 23};
 const bool ACTIVE_LOW = true;
-const int ZONE_THRESHOLDS[] = {80, 60, 40, 20};
+const int ZONE_THRESHOLDS[] = {50, 40, 30, 20};
 
 // Eye animation state
 int currentZone = 0;
@@ -28,6 +28,10 @@ const uint32_t IRIS_COLOURS[] = {
 bool flashOn = true;
 unsigned long lastFlash = 0;
 const unsigned long FLASH_INTERVAL_MS = 200;
+
+int cycleStep = 0;
+unsigned long lastCycle = 0;
+const unsigned long CYCLE_INTERVAL_MS = 50;
 
 // Pupil radius per zone
 const int PUPIL_RADIUS[] = {25, 20, 28, 35, 45};
@@ -62,8 +66,20 @@ void loop() {
     if (distance < ZONE_THRESHOLDS[i]) activeZones = i + 1;
   }
 
-  for (int i = 0; i < 4; i++) {
-    setRelay(i, i < activeZones);
+  if (activeZones == 4) {
+    if (millis() - lastCycle >= CYCLE_INTERVAL_MS) {
+      cycleStep = (cycleStep + 1) % 3;
+      lastCycle = millis();
+    }
+    for (int i = 0; i < 3; i++) {
+      setRelay(i, i == cycleStep);
+    }
+    setRelay(3, true);
+  } else {
+    cycleStep = 0;
+    for (int i = 0; i < 4; i++) {
+      setRelay(i, i < activeZones);
+    }
   }
 
   bool zoneChanged = (activeZones != lastZone);
