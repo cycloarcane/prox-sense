@@ -29,9 +29,6 @@ bool flashOn = true;
 unsigned long lastFlash = 0;
 const unsigned long FLASH_INTERVAL_MS = 200;
 
-// Brow angle offset per zone (how far inner brow drops)
-const int BROW_ANGER[] = {0, 0, 15, 30, 45};
-
 // Pupil radius per zone
 const int PUPIL_RADIUS[] = {25, 20, 28, 35, 45};
 
@@ -97,17 +94,6 @@ void drawEye(int zone, bool flashState) {
   tft.fillCircle(cx, cy, 58, irisColour);
   tft.fillCircle(cx, cy, PUPIL_RADIUS[zone], TFT_BLACK);
   tft.fillCircle(cx - 15, cy - 15, 8, TFT_WHITE);
-
-  int anger = BROW_ANGER[zone];
-  int browY = cy - 85;
-  int browThickness = 10 + (zone * 2);
-
-  int bx1 = cx - 70, by1 = browY + anger;
-  int bx2 = cx + 70, by2 = browY;
-  int bx3 = cx + 70, by3 = browY + browThickness;
-  int bx4 = cx - 70, by4 = browY + browThickness + anger;
-  tft.fillTriangle(bx1, by1, bx2, by2, bx3, by3, TFT_BLACK);
-  tft.fillTriangle(bx1, by1, bx3, by3, bx4, by4, TFT_BLACK);
 }
 
 void setRelay(int index, bool state) {

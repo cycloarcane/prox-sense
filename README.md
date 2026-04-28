@@ -7,7 +7,7 @@ An ESP32-based proximity alert system that uses an ultrasonic sensor to trigger 
 - **Multi-Zone Detection**: Four distance zones (80cm, 60cm, 40cm, 20cm) for graduated alerts.
 - **Visual Indicators**: Three relays dedicated to Green, Yellow, and Red LEDs to show proximity levels.
 - **Audible Alert**: A fourth relay triggers a buzzer at the closest proximity zone.
-- **Animated Eye Display**: GC9A01 1.28" round TFT shows an eye whose iris colour and brow tilt track the active zone — blue (calm), green, yellow, red, then flashing red on the closest zone.
+- **Animated Eye Display**: GC9A01 1.28" round TFT shows an eye whose iris colour tracks the active zone — blue (calm), green, yellow, red, then flashing red on the closest zone.
 - **ESP32 Powered**: Designed for the ESP32 WROOM development board.
 - **Active-Low Relay Support**: Configured for standard active-low relay modules.
 
